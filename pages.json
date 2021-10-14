@@ -1,0 +1,176 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ 
+		{
+			"path": "pages/loading/loading",
+			"style": {
+				"navigationBarTitleText": "心动日记",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/home/index/index",
+			"style": {
+				"navigationBarTitleText": "心动日记",
+				"enablePullDownRefresh": false
+
+			}
+		}, {
+			"path": "pages/home/add/add",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
+		}, {
+			"path": "pages/home/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}, {
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}
+	    ,{
+            "path" : "pages/home/my/help/help",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "help",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/my/lovers/lovers",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "另一半",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/my/skin/skin",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "皮肤",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/my/vip/vip",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "情侣VIP",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/my/myinfo/myinfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+		
+		
+        ,{
+            "path" : "pages/home/index/calendar/calendar",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/index/signin/signin",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+        }
+		
+        ,{
+            "path" : "pages/home/lovebegin/addLove/addLove",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/my/ad/ad",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/index/newcalendar/newcalendar",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/index/Lottery/Lottery",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/home/index/Psy/Psy",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"list": [{
+				"pagePath": "pages/home/index/index"
+			},
+			{
+				"pagePath": "pages/home/add/add"
+			},
+			{
+				"pagePath": "pages/home/my/my"
+			}
+		]
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+
+}
