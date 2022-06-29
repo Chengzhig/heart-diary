@@ -9,29 +9,29 @@
 				<view class="" slot="body">
 					<u-grid :col="4" :border="false">
 						<u-grid-item>
-							<u-icon name="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jiasichen/236b5440-4695-11eb-b997-9918a5dda011.png" :size="46"></u-icon>
+							<u-icon name="https://6d79-mywindows10-v5wzr-1301410593.tcb.qcloud.la/image/jinianri.png?sign=b079f6d97f0da3bf222fe753c6c4affd&t=1634543408" :size="46"></u-icon>
 							<view class="grid-text">纪念日</view>
 						</u-grid-item>
 						<u-grid-item @click="jumpTosetPsy()">
-							<u-icon name="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jiasichen/3f94cd40-4695-11eb-b680-7980c8a877b8.png" :size="46"></u-icon>
+							<u-icon name="https://6d79-mywindows10-v5wzr-1301410593.tcb.qcloud.la/image/lijia.png?sign=f68a5e2c2c8f5ea2dba6bba4c206951f&t=1634543320" :size="46"></u-icon>
 							<view class="grid-text">例假</view>
 						</u-grid-item>
 						<u-grid-item>
-							<u-icon name="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jiasichen/215c2350-4695-11eb-bd01-97bc1429a9ff.png" :size="46"></u-icon>
+							<u-icon name="https://6d79-mywindows10-v5wzr-1301410593.tcb.qcloud.la/image/xiangce.png?sign=16dd0dddbcfa95c2a95cbfda0954891a&t=1634543309" :size="46"></u-icon>
 							<view class="grid-text">相册</view>
 						</u-grid-item>
 						<u-grid-item>
-							<u-icon name="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jiasichen/22c04730-4695-11eb-b997-9918a5dda011.png" :size="46"></u-icon>
+							<u-icon name="https://6d79-mywindows10-v5wzr-1301410593.tcb.qcloud.la/image/zhangben.png?sign=051d05a3ffc8ede77de50a9fbce2f356&t=1634543290" :size="46"></u-icon>
 							<view class="grid-text">账本</view>
 						</u-grid-item>
 					</u-grid>
 					<u-grid :col="4" :border="false">
 						<u-grid-item @tap="jumpToCalendar">
-							<u-icon name="https://tse1-mm.cn.bing.net/th/id/R-C.8a2222b42c4fadfd824c47c7ce3d3917?rik=2lRjUdENPozCcQ&riu=http%3a%2f%2fimg2.3png.com%2f8a2222b42c4fadfd824c47c7ce3d39172d63.png&ehk=2V8l5Pxi79%2fqwzUAWIaNgjiNl7X%2fnv0mHOyca%2bWW2LY%3d&risl=&pid=ImgRaw&r=0" :size="46" ></u-icon>
+							<u-icon name="https://6d79-mywindows10-v5wzr-1301410593.tcb.qcloud.la/image/daka.jfif?sign=7dcdbf9e9b8f2bf561657f60593d1d10&t=1634543258" :size="46" ></u-icon>
 							<view class="grid-text">打卡日历</view>
 						</u-grid-item>
 						<u-grid-item @tap="jumpToLottery">
-							<u-icon name="https://tse1-mm.cn.bing.net/th/id/R-C.eb837f87fd865fd4df884a3142eaf2c5?rik=dapUz4Agtp6x4Q&riu=http%3a%2f%2fdemo.sc.chinaz.com%2fFiles%2fpic%2ficons%2f6758%2fg4.png&ehk=XvSwc0Wh5XpNWspUeDTngD764%2b8EUY%2b20rSFaZFI2wc%3d&risl=&pid=ImgRaw&r=0" :size="46"></u-icon>
+							<u-icon name="https://6d79-mywindows10-v5wzr-1301410593.tcb.qcloud.la/image/choujiang.jpeg?sign=7ce46aae09d814bb53495a8260410b22&t=1634543226" :size="46"></u-icon>
 							<view class="grid-text">积分抽奖</view>
 						</u-grid-item>
 						<u-grid-item>

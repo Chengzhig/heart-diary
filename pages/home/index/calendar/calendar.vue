@@ -40,11 +40,10 @@
 					</view>
 					
 					<!-- 漏签 -->
-					<!-- <view @click="clickSignUp(item.date,0)" class="cell redColor bgGray" 
+					<view @click="clickSignUp(item.date,0)" class="cell" 
 					v-else-if="cur_year<toYear||(cur_year==toYear&&cur_month<toMonth)||(cur_year==toYear&&cur_month==toMonth&&item.date<today)">
-						小程序不兼容这个 v-else-if="(new Date(cur_year+'-'+cur_month+'-'+item.date))<(new Date())">
 						<text>{{item.date}}</text>
-					</view> -->
+					</view>
 					<!-- 今日未签到-->
 					<view @click="clickSignUp(item.date)" class="cell white bg-red" v-else-if="item.date==today&&cur_month==toMonth&&cur_year==toYear">
 						<text>今</text>
@@ -250,7 +249,7 @@
 				// });
 				// this.SignUp.push(this.cur_year + "-" + this.cur_month + "-" + date); //自动加假数据，写了接口就不用了
 				
-				// console.log(this.SignUp);
+				 console.log(this.SignUp);
 				// this.$forceUpdate();
 				
 				// this.$emit('clickChange', this.cur_year + "-" + this.cur_month + "-" + date); //传给调用模板页面

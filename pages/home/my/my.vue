@@ -4,7 +4,8 @@
 		<view class="user-wrap">
 			<view class="setting iconfont icon31shezhi"></view>
 			<view class="info">
-				<image class="avatar" mode="aspectFill" :src="userInfo.headPicUrl"></image>
+				<open-data class="avatar"  mode="a	pectFill" type="userAvatarUrl"></open-data>
+				<image class="avatar" mode="a	pectFill" :src="userInfo.headPicUrl"></image>
 				<view class="nickname" style="color: #000000;">{{userInfo.nickName}}</view>
 			</view>
 		</view>
