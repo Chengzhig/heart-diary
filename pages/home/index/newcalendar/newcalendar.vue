@@ -32,7 +32,7 @@
 					<view v-if="item.isSign == true &&item.isSign2 == true" class='cell greenColor bgFULL  '>
 						<text>{{item.date}}</text>
 					</view>
-					<view v-else-if="item.isSign == false &&item.isSign2 == true" class='cell greenColor bgRIGHTHALF  '>
+					<view @click="clickSignUp(item.date,0)" v-else-if="item.isSign == false &&item.isSign2 == true" class='cell greenColor bgRIGHTHALF  '>
 						<text>{{item.date}}</text>
 					</view>
 					<view v-else-if="item.isSign == true &&item.isSign2 == false" class='cell greenColor bgLEFTHALF  '>
@@ -60,10 +60,12 @@
 </template>
 
 <script>
+	var app=getApp();
 	export default {
 		data() {
 			return {
 				days: [],
+				mysignid:"",
 				SignUp: [],
 				SignUp2: [],
 				cur_year: 0, //当前选的年
@@ -83,6 +85,10 @@
 			sendMonth: {
 				type: Number,
 				default: new Date().getMonth() + 1
+			},
+			dataSourceId: { //只是示例一个翻译而已，要想所有都翻译自己可以再加加
+				type: String,
+				default: ""
 			},
 			dataSource: { //已签到的数据源
 				type: Array,
@@ -104,6 +110,7 @@
 		created() {
 			this.cur_year = this.sendYear;
 			this.cur_month = this.sendMonth;
+			this.mysignid =this.dataSourceId
 			this.SignUp = this.dataSource;
 			this.SignUp2 = this.dataSource2;
 			this.calculateEmptyGrids(this.cur_year, this.cur_month);
@@ -113,6 +120,7 @@
 		watch: {
 			dataSource: 'onResChange',
 			dataSource2: 'onResChange2',
+			dataSourceId: 'onResChange3',
 		},
 		methods: {
 			// 获取当月共多少天
@@ -164,6 +172,10 @@
 			},
 			onResChange2(newD, oldD) {
 				this.SignUp2 = newD;
+				this.onJudgeSign();
+			},
+			onResChange3(newD, oldD) {
+				this.mysignid = newD;
 				this.onJudgeSign();
 			},
 			//匹配判断当月与当月哪些日子签到打卡
@@ -232,24 +244,48 @@
 				this.$emit('dateChange', this.cur_year+"-"+this.cur_month); //传给调用模板页面去拿新数据				
 			},
 
-			clickSignUp(date, type) { //type=0补签，type=1当日签到		
-			
-				/*var str = "签到";
-				if (type == 0) {//如果不需要补签功能直接在这阻止不执行后面的代码就行。
-					str = "补签";
+			clickSignUp(date, type) { //type=0补签，type=1当日签到
+				var year = this.cur_year,
+					month = this.cur_month,
+					day = date;
+				var signday;
+				if(month<=9){
+					month="0"+month;
 				}
-				uni.showToast({
-					title: str + "成功" + date + "号",
-					icon: 'success',
-					duration: 2000
-				});
-				// this.SignUp.push(this.cur_year + "-" + this.cur_month + "-" + date); //自动加假数据，写了接口就不用了
+				if(day<=9){
+					day="0" + day;
+				}
+				signday=year+"-"+month+"-"+day
+				var signlist = this.SignUp;
+				signlist.push(signday)
+				wx.cloud.callFunction({
+				  name: 'signup', 
+				  data: { 
+					_mid: app.globalData.useropenid, 
+					date: signday,
+					}, 
+				  success: res=> { 
+					uni.hideLoading(); 
+					uni.showModal({ 
+					  title: res.result.msg, 
+					  icon: 'success', 
+					  duration: 2000 ,
+					});
+					console.log(res); 
+				  }, fail: err=> { 
+					uni.hideLoading(); 
+					uni.showModal({ 
+					  title: "签到失败", 
+					  icon: 'fail', 
+					  duration: 2000 ,
+					  }); 
+					console.info("调用云函数signup失败", err); 
+				  } 
+				}); 
+					
+				/* */
 				
-				// console.log(this.SignUp);
-				// this.$forceUpdate();
-				
-				this.$emit('clickChange', this.cur_year + "-" + this.cur_month + "-" + date); //传给调用模板页面
-				*/
+				//this.$emit('clickChange', this.cur_year + "-" + this.cur_month + "-" + date); //传给调用模板页面
 				//refresh
 				this.onJudgeSign();
 
