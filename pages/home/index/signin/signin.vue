@@ -6,7 +6,7 @@
 				天</view>
 		</view>
 		<view style=" border-radius: 20rpx; margin-left: 20; margin-right: 20;padding-top: 20;padding-bottom: 20;">
-			<modelCalendar style="" :sendYear="toYear" :sendMonth="toMonth" :dataSource="signData" :dataSource2="signData2" :totalNum="sumCount" @dateChange="getRecord">
+			<modelCalendar style="" :sendYear="toYear" :sendMonth="toMonth" :dataSourceId="mysignid" :dataSource="signData" :dataSource2="signData2" :totalNum="sumCount" @dateChange="getRecord">
 			</modelCalendar> 
 			
 			<view style="padding-left: 40;padding-right: 40;">
@@ -32,8 +32,8 @@
 				toYear: parseInt(new Date().getFullYear()), //本日
 				toMonth: parseInt(new Date().getMonth() + 1), //本月
 				sumCount: 0,
-				signData: [], //["2021-01-13", "2021-01-12", "2021-01-11"]
-				signData2: [],
+				signData: [], //自己的数据
+				signData2: [],//他/她的数据
 				status: true,//true表示签到过了，不能签到
 				set: {signin_day_seven:'20',signin_day_fifteen:'50'},
 				month: '',
@@ -54,22 +54,34 @@
 				  success :res=>{ }
 				})
 			},
-			async getData(){ 
-				this.signData=uni.getStorageSync("signData");
-				this.signData2=uni.getStorageSync("signData2");
-				if(this.signData.includes(this.getToday())){
-					this.status=true;
-				}
+			async getData(){
 				var year=new Date().getFullYear(),
 					month=new Date().getMonth()+1
+				this.signData=uni.getStorageSync("signData");
+				//this.signData2=uni.getStorageSync("signData2");
+				//当前日历上的年和月
+				var nowyear=new Date().getFullYear(),
+					nowmonth=new Date().getMonth()+1
+
+				//当前时间与日期时间不同，不可签到
+				
 				if(this.month!=''){
 					year=parseInt(this.month.substr(0,4));
 					month=parseInt(this.month.substr(5));
 				}
-				console.log(year)
-				console.log(month)
+				if(nowmonth==month&&nowyear==year){
+					if(this.signData.includes(this.getToday())){
+						this.status=true;
+					}
+					else{
+						this.status=false;
+					}
+				}
+				else{
+					this.status=false;
+				}
 				
-				await wx.cloud.callFunction({
+				wx.cloud.callFunction({
 					name: 'getsign',
 					data: {
 						_mid: app.globalData._hid,
@@ -96,7 +108,7 @@
 						console.info('fail get sign', res);
 					}
 				}) 
-				await wx.cloud.callFunction({
+				wx.cloud.callFunction({
 					name: 'getsign',
 					data: {
 						_mid: app.globalData.useropenid,
@@ -105,14 +117,18 @@
 					}
 					,success:res=>{
 						 console.info('success get sign', res);
-						 if(res.result.status==0){//找到签到数据
+						 if(res.result.status==0){//找到自己的签到数据
 							 uni.setStorageSync("signData",res.result.msg.signinDay)
 							 this.mysignid = res.result.msg._id
 							 this.signData = res.result.msg.signinDay
 							 this.sumCount = res.result.msg.sussionDay 
 							 console.log("siginday="+res.result.msg.signinDay)
 							 if(res.result.msg.signinDay!=null){
-								if(res.result.msg.signinDay.includes(this.getToday())){
+								if(res.result.msg.signYear!=nowyear||res.result.msg.signMonth!=nowmonth){
+									 this.status=true;
+									 console.log("this.status:"+this.status)
+								}
+								else if(res.result.msg.signinDay.length!=0&&res.result.msg.signinDay.includes(this.getToday())){
 									this.status=true;
 								}
 								else{
@@ -173,16 +189,13 @@
 				uni.showLoading({
 					title: '处理中...'
 				})
-				var today = this.getToday(); 
-				if (this.signData.length == 0) { 
-					console.info("this.signData==[today]"); 
+				
+				var today = this.getToday();
 					wx.cloud.callFunction({
-					  name: 'addsign', 
+					  name: 'signup', 
 					  data: { 
 						_mid: app.globalData.useropenid, 
-						signYear: year, 
-						signMonth: month, 
-						signinDay: today ,
+						date: today,
 						}, 
 					  success: res=> { 
 						uni.hideLoading(); 
@@ -202,59 +215,9 @@
 						  duration: 2000 ,
 						  }); 
 						this.getData(); 
-						console.info("调用云函数addsign失败", err); 
+						console.info("调用云函数signup失败", err); 
 					  } 
 					}); 
-				}
-				else 
-				{
-					console.info("this.signData!=[today]"); 
-					var tmpsignday = this.signData; 
-					tmpsignday.push(today); 
-					wx.cloud.callFunction({ 
-					  name: 'updatesign', 
-					  data: { 
-						_id: this.mysignid, 
-						_mid: app.globalData.useropenid, 
-						signYear: year, 
-						signMonth: month, 
-						signinDay: tmpsignday ,
-					 }, 
-			 
-					  success:res=> {
-						if (res.result.status == 0) { 
-						  uni.hideLoading(); 
-						  uni.showModal({ 
-							title: "签到成功", 
-							icon: 'success', 
-							duration: 2000 ,
-							}); 
-						  this.getData();
-						  console.info(res); 
-						} 
-						else 
-						{ 
-						  uni.hideLoading(); 
-						  uni.showModal({ 
-							title: "签到失败,请联系管理员", 
-							icon: 'fail', 
-							duration: 2000 }); 
-						  this.getData();
-						  console.info(res); 
-						} 
-					  }, fail:err=> { 
-						uni.hideLoading(); 
-						uni.showModal({ 
-						  title: "签到失败,请联系管理员", 
-						  icon: 'fail', 
-						  duration: 2000 ,
-						});
-						this.getData(); 
-						console.info(err); 
-						}
-					})
-				}
-				
 			},
 			//当模板的时候可以直接引入，然后触发子组件事件到父界面去控制数据
 
